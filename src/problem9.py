@@ -33,14 +33,14 @@ def findDaShit(desiredSum):
             c = abs(firstTerm - (a * b / desiredSum))
             
             if isPythagoreanTriplet(a, b, c):
-                print "{0} loops".format(i)
+                print("{0} loops").format(i)
                 return a, b, c
 
 if __name__ == "__main__":
     a, b, c = findDaShit(1000)
-    print a, b, c
+    print(a, b, c)
     
-    print a * b * c
+    print(a * b * c)
 
 class Test(unittest.TestCase):
     def test345(self):

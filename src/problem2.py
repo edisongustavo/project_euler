@@ -28,4 +28,4 @@ if __name__ == '__main__':
         previousTerm = term
         term = nextTerm
 
-    print sum
+    print(sum)
