@@ -8,7 +8,7 @@ import unittest
 
 if __name__ == '__main__':
     prime = problem3.nextPrime(1)
-    for i in range(10001-2):
+    for i in range(10001 - 2):
         prime = problem3.nextPrime(prime)    
     print(prime)
 
