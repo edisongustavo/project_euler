@@ -25,5 +25,4 @@ if __name__ == '__main__':
 
     squareOfSum = squareOfSum ** 2
     
-    print("{0} - {1}").format(squareOfSum, sumOfSquares)
-    print(squareOfSum - sumOfSquares) 
+    print("{0} - {1} = {2}".format(squareOfSum, sumOfSquares, squareOfSum - sumOfSquares))

@@ -26,28 +26,28 @@ def bruteForce(numberOfDigits):
     return foundNumbers
 
 def getDigits(number):
-    quocient = abs(number) / 10
+    quocient = abs(number) // 10
     remain = abs(number) % 10
     digits = [remain]
     while (quocient > 0):
         remain = quocient % 10
-        quocient = quocient / 10
+        quocient = quocient // 10
         digits.append(remain)
     return digits
 
 def isPalindrome(number):
     digits = getDigits(number)
-    size = getDigits(number).__len__()
+    size = len(getDigits(number))
     if size % 2 != 0:
         return False
     
-    for i in range(0, size / 2):
+    for i in range(0, size // 2):
         if digits[i] != digits[size - i - 1]:
             return False
     return True
 
 if __name__ == '__main__':
-    print("{0}").format(bruteForce(3))
+    print(bruteForce(3))
 
 class Test(unittest.TestCase):
     def testIsPalindrome(self):
@@ -59,3 +59,6 @@ class Test(unittest.TestCase):
         
     def testBruteForceWith3Digits(self):
         self.assertEqual([913, 993], bruteForce(3))
+        
+    def testGetDigits(self):
+        self.assertEqual([1, 2, 3, 4], getDigits(4321))
