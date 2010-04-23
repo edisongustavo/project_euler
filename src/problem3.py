@@ -10,19 +10,23 @@ What is the largest prime factor of the number 600851475143 ?
 import math
 import unittest
 
+calculatedPrimes = [1, 2]
+
 def isPrime(number):
-    if number in [1, 2]:
+    if number in calculatedPrimes:
         return True
 
     lastDigit = number % 10
     if lastDigit in [2, 5] and number not in [2, 5]:
         return False
 
-    i = 3
+    i = calculatedPrimes[-1]
     while (i < math.sqrt(number) + 1):
         if number % i == 0:
             return False
         i += 2
+        
+    calculatedPrimes.append(number)
 
     return True
 
