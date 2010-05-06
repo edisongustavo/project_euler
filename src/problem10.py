@@ -7,29 +7,34 @@ The sum of the primes below 10 is 2 + 3 + 5 + 7 = 17.
 
 Find the sum of all the primes below two million.
 '''
-from primes import nextPrime
+from primes import nextPrime, primeListUsingSieveOfEratosthenes
 import cProfile
 import unittest
 
 
 def getPrimeSumBelow(num):
-    sum = 5
-    prime = 3
-    while True:
-        prime = nextPrime(prime)
-        if prime > num:
-            break
-
-        sum += prime
-
-    return sum
+    if num <= 1:
+        return 0
+    if num <= 2:
+        return 2
+    
+    primes = primeListUsingSieveOfEratosthenes(num)
+    
+    return sum(primes)
 
 if __name__ == "__main__":
-#    cProfile.run('getPrimeSumBelow(2000000)')
-    print(getPrimeSumBelow(2000000))
+    cProfile.run('getPrimeSumBelow(1000000)')
+    #print(getPrimeSumBelow(2000000))
     
 class Test(unittest.TestCase):
 
+    def testBelow7_lastNumberIsPrimeSoDontIncludeItInSum(self):
+        self.assertEqual(2 + 3 + 5, getPrimeSumBelow(7))
     def testBelow10(self):
         self.assertEqual(17, getPrimeSumBelow(10))
         
+    def testBelow15(self):
+        self.assertEqual(2 + 3 + 5 + 7 + 11 + 13, getPrimeSumBelow(15))
+        
+    def testBelow23(self):
+        self.assertEqual(2 + 3 + 5 + 7 + 11 + 13 + 17 + 19, getPrimeSumBelow(23))
