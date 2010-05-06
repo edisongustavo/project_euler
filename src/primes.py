@@ -4,6 +4,7 @@ Created on 03/05/2010
 @author: emuenz
 '''
 from bisect import bisect
+import array
 import math
 
 calculatedPrimes = [2, 3, 5]
@@ -18,19 +19,20 @@ http://en.wikipedia.org/wiki/Sieve_of_Eratosthenes
 '''
 def primeListUsingSieveOfEratosthenes(number):
     #assume that the number hasn't been calculated
-    listOfPrimes = [1] * (number + 1)
+    listOfPrimes = array.array('b', [1] * (number + 1))
+
     
     lowerBound = 2
     upperBound = lowerBound ** 2
 
     while upperBound < number:
-        for i in range(upperBound, number):
-            if i % lowerBound == 0:
+        for i in range(upperBound, number + 1):
+            if listOfPrimes[i] != 0 and i % lowerBound == 0:
                 listOfPrimes[i] = 0
         
         #find next lower bound
-        for i in range(lowerBound + 1, number):
-            if listOfPrimes[i - 1] == 1:
+        for i in range(lowerBound + 1, number + 1):
+            if listOfPrimes[i] == 1:
                 lowerBound = i
                 break
             
