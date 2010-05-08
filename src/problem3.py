@@ -7,37 +7,9 @@ The prime factors of 13195 are 5, 7, 13 and 29.
 
 What is the largest prime factor of the number 600851475143 ?
 '''
-import math
+from primes import nextPrime
 import unittest
 
-calculatedPrimes = [1, 2]
-
-def isPrime(number):
-    if number in calculatedPrimes:
-        return True
-
-    lastDigit = number % 10
-    if lastDigit in [2, 5] and number not in [2, 5]:
-        return False
-
-    i = calculatedPrimes[-1]
-    while (i < math.sqrt(number) + 1):
-        if number % i == 0:
-            return False
-        i += 2
-        
-    calculatedPrimes.append(number)
-
-    return True
-
-def nextPrime (number):
-    while (True):
-        number += 2
-        if isPrime(number):
-            return number
-
-    return None
-    
 def nextPrimeFactor(number, startingFactor=1):
     i = startingFactor
     
