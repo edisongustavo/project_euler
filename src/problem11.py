@@ -76,7 +76,7 @@ def findHighestProd(matrix, numOfNumbers=4):
 class Test(unittest.TestCase):
     def testHighestOnHorizontal(self):
         nums = [[8 , 2 , 22, 97],
-                [49, 49, 99, 40],
+                [49, 49, 0, 40],
                 [81, 49, 31, 0],
                 [52, 70, 95, 23],
                 [10, 70, 0 , 5]]

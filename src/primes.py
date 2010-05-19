@@ -16,10 +16,9 @@ def binary_search(container, value):
 '''
 http://en.wikipedia.org/wiki/Sieve_of_Eratosthenes
 
+Calculates a list of prime numbers up to 'number'
 '''
 def primeListUsingSieveOfEratosthenes(number):
-    #assume that the number hasn't been calculated
-    
     listOfPrimes = array.array('b', [1] * (number + 1))
 
     lowerBound = 2
