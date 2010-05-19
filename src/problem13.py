@@ -106,17 +106,17 @@ Work out the first ten digits of the sum of the following one-hundred 50-digit n
 20849603980134001723930671666823555245252804609722
 53503534226472524250874054075591789781264330331690
 '''
-from problem4 import getDigits
+import numbers
 
 if __name__ == '__main__':
     with open("problem13_number.txt") as f:
         sum = 0
-        numbers = f.readlines()
-        for num in numbers:
+        numberList = f.readlines()
+        for num in numberList:
             num.replace("\n","")
             sum += int(num)
 
-    digits = getDigits(sum)
+    digits = numbers.getDigits(sum)
     stringWithNumbers = "".join(map(lambda s : str(s), digits[0:10]))
     
     print(stringWithNumbers)
