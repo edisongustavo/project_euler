@@ -6,6 +6,7 @@ Created on 03/05/2010
 from bisect import bisect
 import array
 import math
+import unittest
 
 calculatedPrimes = [2, 3, 5]
 
@@ -19,24 +20,24 @@ http://en.wikipedia.org/wiki/Sieve_of_Eratosthenes
 Calculates a list of prime numbers up to 'number'
 '''
 def primeListUsingSieveOfEratosthenes(number):
-    listOfPrimes = array.array('b', [1] * (number + 1))
+    booleanListOfPrimes = array.array('b', [1] * (number + 1))
 
     lowerBound = 2
     upperBound = lowerBound ** 2
 
-    while upperBound < number:
+    while upperBound <= number:
         for i in range(upperBound, number + 1, lowerBound):
-            listOfPrimes[i] = 0
+            booleanListOfPrimes[i] = 0
 
         #find next lower bound
         for i in range(lowerBound + 1, number + 1):
-            if listOfPrimes[i] == 1:
+            if booleanListOfPrimes[i] == 1:
                 lowerBound = i
                 break
             
         upperBound = lowerBound ** 2
 
-    return createList(listOfPrimes)
+    return createList(booleanListOfPrimes)
 
 def createList(booleanListOfPrimes):
     primesList = []
@@ -69,6 +70,11 @@ def isPrime(number):
     return isPrime_BruteForce(number)
 
 def nextPrime (number):
+    if number == 1:
+        return 2
+    if number == 2:
+        return 3
+    
     if number % 2 == 0:
         number -= 1
 
@@ -78,3 +84,14 @@ def nextPrime (number):
             return number
 
     return None
+
+
+class Test(unittest.TestCase):
+
+    def testPrimeListUsingSieveOfEratosthenes(self):
+        self.assertEqual([2, 3], primeListUsingSieveOfEratosthenes(3))
+        self.assertEqual([2, 3], primeListUsingSieveOfEratosthenes(4))
+        self.assertEqual([2, 3, 5], primeListUsingSieveOfEratosthenes(5))
+        self.assertEqual([2, 3, 5], primeListUsingSieveOfEratosthenes(6))
+        self.assertEqual([2, 3, 5, 7], primeListUsingSieveOfEratosthenes(7))
+        self.assertEqual([2, 3, 5, 7], primeListUsingSieveOfEratosthenes(10))
