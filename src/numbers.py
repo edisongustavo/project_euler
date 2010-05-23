@@ -32,10 +32,13 @@ def simplifyNumber(number, factor, callback=None):
     return number
 
 
-def getPrimeFactors(number):
+def getPrimeFactors(number, primeGenerator=None):
     primeFactors = []
     
-    possibleDivisors = primes.primeListUsingSieveOfEratosthenes(number)
+    if primeGenerator is None:
+        primeGenerator = primes.PrimeGenerator()
+        
+    possibleDivisors = primeGenerator.primeListUsingSieveOfEratosthenes(number)
     
     for possibleDivisor in possibleDivisors:
         if number % possibleDivisor == 0:

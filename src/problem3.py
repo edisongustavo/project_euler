@@ -15,13 +15,15 @@ import numbers
 Cant get the prime factors using sieveOfErasthotenes, because the numbers is too big
 '''
 def calculatePrimeFactorsNaively(number):
+    primeGenerator = primes.PrimeGenerator()
+    
     primeFactors = []
     
     #the argument 'number' is too big, so calculate the factors differently
     prime = 1
     upperbound = math.sqrt(number)
     while prime < upperbound:
-        prime = primes.nextPrime(prime)
+        prime = primeGenerator.nextPrime()
         if number % prime == 0:
             primeFactors.append(prime)
             number = numbers.simplifyNumber(number, prime)

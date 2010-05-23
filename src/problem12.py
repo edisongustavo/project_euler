@@ -25,8 +25,10 @@ We can see that 28 is the first triangle number to have over five divisors.
 What is the value of the first triangle number to have over five hundred divisors?
 '''
 from functools import reduce
+import cProfile
 import numbers
 import operator
+import primes
 import unittest
 
 def getTriangleNumber(number):
@@ -48,22 +50,28 @@ def getDivisorsRecursive(number, set, primeFactors, grouping=None):
     
     getDivisorsRecursive(number, set, primeFactors, grouping - 1)
     
-def getDivisors(number):
+def getDivisors(number, primeGenerator=None):
+    if primeGenerator is None:
+        primeGenerator = primes.PrimeGenerator()
+        
     divisors = set()
     
-    primeFactors = numbers.getPrimeFactors(number)
+    primeFactors = numbers.getPrimeFactors(number, primeGenerator)
     
     getDivisorsRecursive(number, divisors, primeFactors)
     
     divisors.add(1)
-    return divisors
+    
+    return sorted(list(divisors))
 
 def answer():
+    primeGenerator = primes.PrimeGenerator()
+    
     triangleNumber = 0
     while (True):
         i = 1
         triangleNumber += i 
-        divisors = getDivisors(triangleNumber)
+        divisors = getDivisors(triangleNumber, primeGenerator)
         print(triangleNumber, divisors)
         if len(divisors) > 25:
             return triangleNumber
@@ -83,15 +91,15 @@ class Test(unittest.TestCase):
     
     
     def testGetDivisors(self):
-        self.assertEqual(set([1, 3]), getDivisors(3))
-        self.assertEqual(set([1, 2, 4]), getDivisors(4))
-        self.assertEqual(set([1, 2, 3, 6]), getDivisors(6))
-        self.assertEqual(set([1, 2, 5, 10]), getDivisors(10))
-        self.assertEqual(set([1, 3, 5, 15]), getDivisors(15))
-        self.assertEqual(set([1, 2, 4, 5, 10, 20]), getDivisors(20))
-        self.assertEqual(set([1, 2, 4, 7, 14, 28]), getDivisors(28))
+        self.assertEqual([1, 3], getDivisors(3))
+        self.assertEqual([1, 2, 4], getDivisors(4))
+        self.assertEqual([1, 2, 3, 6], getDivisors(6))
+        self.assertEqual([1, 2, 5, 10], getDivisors(10))
+        self.assertEqual([1, 3, 5, 15], getDivisors(15))
+        self.assertEqual([1, 2, 4, 5, 10, 20], getDivisors(20))
+        self.assertEqual([1, 2, 4, 7, 14, 28], getDivisors(28))
         
-
+        self.assertEqual([1, 2, 3, 4, 5, 6, 8, 10, 12, 15, 20, 24, 30, 40, 60, 120], getDivisors(120))
 
 if __name__ == "__main__":
-    print(answer())
+    cProfile.run('print(answer())')

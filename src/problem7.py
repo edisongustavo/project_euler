@@ -11,17 +11,21 @@ What is the 10001st prime number?
 import primes
 import unittest
 
-def answer():
-    prime = primes.nextPrime(1)
-    for i in range(10001 - 1):
-        prime = primes.nextPrime(prime)
+def getIthPrime(number):
+    primeGenerator = primes.PrimeGenerator()
+    for i in range(number):
+        prime = primeGenerator.nextPrime()
     return prime
+
+def answer():
+    return getIthPrime(10001)
 
 if __name__ == '__main__':
     print(answer())
 
 class TestProblem7(unittest.TestCase):
-    def test(self):
-        self.assertEqual(5, primes.nextPrime(3))
+    def testIthPrime(self):
+        self.assertEqual(13, getIthPrime(6))
+        
     def testAnswer(self):
         self.assertEqual(104743, answer())
