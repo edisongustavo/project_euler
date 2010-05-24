@@ -43,6 +43,16 @@ class PrimeFactors:
         
     def getPrimeFactors(self, number, callback=None):
     
+        countedPrimes = self.getCountedPrimeFactors(number)
+        return list(countedPrimes.keys())
+
+    '''
+    Returns a dict() at the form:
+    
+    factor => times it factors the <param>number</param>
+    '''
+    def getCountedPrimeFactors(self, number):
+        
         possibleDivisors = self.primeGenerator.primeListUsingSieveOfEratosthenes(int(number / 2) + 1)
 
         if number == 1:
@@ -54,43 +64,31 @@ class PrimeFactors:
         
         #Optimization for prime numbers
         if self.primeGenerator.isPrime(number):
-            if callback is not None:
-                callback(number)
-            return [number]
+            return dict([(number, 1)])
 
         for possibleDivisor in possibleDivisors:
             if possibleDivisor > number:
                 raise RuntimeError("IsPrime is bugged!")
             
             if number % possibleDivisor == 0:
-                primeFactors = []
-                primeFactors.append(possibleDivisor)
+                primeFactors = dict()
                 
-                theCallback = None
-                if callback is not None:
-                    theCallback = lambda x : callback(possibleDivisor)
+                def inc(x):
+                    if x in primeFactors:
+                        primeFactors[x] += 1
+                    else:
+                        primeFactors[x] = 1
+                
+                theCallback = lambda x : inc(possibleDivisor)
                 simplifiedNumber = simplifyNumber(number, possibleDivisor, theCallback)
-                others = self.getPrimeFactors(simplifiedNumber, callback)
+                others = self.getCountedPrimeFactors(simplifiedNumber)
                 if others != None:
-                    primeFactors.extend(others)
+                    primeFactors.update(others)
                 self.cache[number] = primeFactors
                     
                 return primeFactors
             
         raise RuntimeError("Couldn't find a prime that divides the number. That's odd :(")
-
-    def getCountedPrimeFactors(self, number):
-        countedPrimeFactors = dict()
-        
-        def inc(x):
-            if x in countedPrimeFactors:
-                countedPrimeFactors[x] += 1
-            else:
-                countedPrimeFactors[x] = 1
-            
-        self.getPrimeFactors(number, inc)
-        
-        return countedPrimeFactors
 
 class Test(unittest.TestCase):
     
@@ -113,5 +111,6 @@ class Test(unittest.TestCase):
         self.assertEqual(dict([(3, 1)]), self.primeFactors.getCountedPrimeFactors(3))
         self.assertEqual(dict([(2, 2)]), self.primeFactors.getCountedPrimeFactors(4))
         self.assertEqual(dict([(5, 1)]), self.primeFactors.getCountedPrimeFactors(5))
-        self.assertEqual(dict([(2, 1), (3, 1)]), self.primeFactors.getCountedPrimeFactors(6))
-        self.assertEqual(dict([(2, 2), (3, 1)]), self.primeFactors.getCountedPrimeFactors(12))
+        self.assertEqual(dict([(2, 1), (3, 1)]), self.primeFactors.getCountedPrimeFactors(2**1 * 3**1))
+        self.assertEqual(dict([(2, 2), (3, 1)]), self.primeFactors.getCountedPrimeFactors(2**2 * 3**1))
+        self.assertEqual(dict([(2, 2), (3, 2)]), self.primeFactors.getCountedPrimeFactors(2**2 * 3**2))

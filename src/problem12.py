@@ -35,8 +35,11 @@ class Problem12:
         self.primeFactors = numbers.PrimeFactors(self.primeGenerator)
         
     def getNumberDivisors(self, number):
+        if number == 1:
+            return 1
+        
         countedPrimeFactors = self.primeFactors.getCountedPrimeFactors(number)
-    
+
         ret = 1
         for times in countedPrimeFactors.values():
             ret *= (times + 1)
@@ -54,7 +57,7 @@ def answer():
         i = 1
         triangleNumber += i 
         numberDivisors = problem12.getNumberDivisors(triangleNumber)
-        if numberDivisors > 100:
+        if numberDivisors > 500:
             return triangleNumber
         i += 1
             
@@ -72,6 +75,9 @@ class Test(unittest.TestCase):
         self.assertEqual(len([1, 2, 4, 7, 14, 28]), self.problem12.getNumberDivisors(28))
         
         self.assertEqual(len([1, 2, 3, 4, 5, 6, 8, 10, 12, 15, 20, 24, 30, 40, 60, 120]), self.problem12.getNumberDivisors(120))
+        
+    def testAnswer(self):
+        self.assertEqual(1980981, answer())
 
 if __name__ == "__main__":
     cProfile.run('print(answer())')
