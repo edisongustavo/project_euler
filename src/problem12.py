@@ -29,43 +29,49 @@ import numbers
 import primes
 import unittest
 
-def getNumberDivisors(number, primeGenerator=None):
-    if primeGenerator is None:
-        primeGenerator = primes.PrimeGenerator()
+class Problem12:
+    def __init__(self):
+        self.primeGenerator = primes.PrimeGenerator()
+        self.primeFactors = numbers.PrimeFactors(self.primeGenerator)
         
-    countedPrimeFactors = numbers.getCountedPrimeFactors(number, primeGenerator)
-
-    ret = 1
-    for times in countedPrimeFactors.values():
-        ret *= (times + 1)
-    return ret
-
-primeGenerator = primes.PrimeGenerator()
+    def getNumberDivisors(self, number):
+        countedPrimeFactors = self.primeFactors.getCountedPrimeFactors(number)
+    
+        ret = 1
+        for times in countedPrimeFactors.values():
+            ret *= (times + 1)
+        return ret
+    
+    def fillCache(self, number):
+        self.primeGenerator.primeListUsingSieveOfEratosthenes(number)
 
 def answer():
+    problem12 = Problem12()
+    problem12.fillCache(1000000)
+    
     triangleNumber = 0
     while (True):
         i = 1
         triangleNumber += i 
-        numberDivisors = getNumberDivisors(triangleNumber, primeGenerator)
-        if numberDivisors > 90:
+        numberDivisors = problem12.getNumberDivisors(triangleNumber)
+        if numberDivisors > 100:
             return triangleNumber
         i += 1
-
+            
 class Test(unittest.TestCase):
-    
-    def testGetNumberDivisors(self):
-        self.assertEqual(len([1, 3]), getNumberDivisors(3))
-        self.assertEqual(len([1, 2, 4]), getNumberDivisors(4))
-        self.assertEqual(len([1, 2, 3, 6]), getNumberDivisors(6))
-        self.assertEqual(len([1, 2, 5, 10]), getNumberDivisors(10))
-        self.assertEqual(len([1, 3, 5, 15]), getNumberDivisors(15))
-        self.assertEqual(len([1, 2, 4, 5, 10, 20]), getNumberDivisors(20))
-        self.assertEqual(len([1, 2, 4, 7, 14, 28]), getNumberDivisors(28))
+    def setUp(self):
+        self.problem12 = Problem12()
         
-        self.assertEqual(len([1, 2, 3, 4, 5, 6, 8, 10, 12, 15, 20, 24, 30, 40, 60, 120]), getNumberDivisors(120))
+    def testGetNumberDivisors(self):
+        self.assertEqual(len([1, 3]), self.problem12.getNumberDivisors(3))
+        self.assertEqual(len([1, 2, 4]), self.problem12.getNumberDivisors(4))
+        self.assertEqual(len([1, 2, 3, 6]), self.problem12.getNumberDivisors(6))
+        self.assertEqual(len([1, 2, 5, 10]), self.problem12.getNumberDivisors(10))
+        self.assertEqual(len([1, 3, 5, 15]), self.problem12.getNumberDivisors(15))
+        self.assertEqual(len([1, 2, 4, 5, 10, 20]), self.problem12.getNumberDivisors(20))
+        self.assertEqual(len([1, 2, 4, 7, 14, 28]), self.problem12.getNumberDivisors(28))
+        
+        self.assertEqual(len([1, 2, 3, 4, 5, 6, 8, 10, 12, 15, 20, 24, 30, 40, 60, 120]), self.problem12.getNumberDivisors(120))
 
 if __name__ == "__main__":
-    primeGenerator.primeListUsingSieveOfEratosthenes(1000000) #fills the cache
-
     cProfile.run('print(answer())')
