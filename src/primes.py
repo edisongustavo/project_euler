@@ -4,59 +4,70 @@ Created on 03/05/2010
 @author: emuenz
 '''
 import bisect
-import array
 import math
 import unittest
 
 def binary_search(container, value):
     i = bisect.bisect_right(container, value)
-    return container[i-1] == value
+    return container[i - 1] == value
+
+class SieveOfEratosthenes():
+        def __init__(self):
+            pass
+            
+        def calculate(self, number):
+            booleanListOfPrimes = [1] * (int(number) + 1)
+            
+            lowerBound = 2
+            upperBound = lowerBound ** 2
+        
+            while upperBound <= number:
+                for i in range(upperBound, number + 1, lowerBound):
+                    booleanListOfPrimes[i] = 0
+        
+                #find next lower bound
+                for i in range(lowerBound + 1, number + 1):
+                    if booleanListOfPrimes[i] == 1:
+                        lowerBound = i
+                        break
+                    
+                upperBound = lowerBound ** 2
+                
+            self.booleanListOfPrimes = booleanListOfPrimes
+            
+        def getList(self):
+            return self._createList(self.booleanListOfPrimes)
+        
+        def _createList(self, booleanListOfPrimes):
+            primesList = []
+            for i in range(2, booleanListOfPrimes.__len__()):
+                if booleanListOfPrimes[i] == 1:
+                    primesList.append(i)
+            return primesList
 
 class PrimeGenerator:
     
     def __init__(self):
         self._primesCache = []
+        self.sieveOfEratosthenesCache = SieveOfEratosthenes()
         
     '''
     http://en.wikipedia.org/wiki/Sieve_of_Eratosthenes
     
-    Calculates a list of prime numbers up to 'number'
+    Calculates a list of primes up to 'number'
     '''
     def primeListUsingSieveOfEratosthenes(self, number):
         #checks if cache contains enough primes
         if len(self._primesCache) > 0 and self._primesCache[-1] >= number:
-            for i in range(0, len(self._primesCache)):
-                if self._primesCache[i] > number:
-                    return self._primesCache[0:i-1] 
-        
-        booleanListOfPrimes = array.array('b', [1] * (int(number) + 1))
-    
-        lowerBound = 2
-        upperBound = lowerBound ** 2
-    
-        while upperBound <= number:
-            for i in range(upperBound, number + 1, lowerBound):
-                booleanListOfPrimes[i] = 0
-    
-            #find next lower bound
-            for i in range(lowerBound + 1, number + 1):
-                if booleanListOfPrimes[i] == 1:
-                    lowerBound = i
-                    break
-                
-            upperBound = lowerBound ** 2
-    
-        primesList = self._createList(booleanListOfPrimes)
+            i = bisect.bisect_left(self._primesCache, number)
+            return self._primesCache[0:i]
+
+        print ("Didnt reach cache on primeListUsingSieveOfEratosthenes for ", number)
+        self.sieveOfEratosthenesCache.calculate(number)
+        primesList = self.sieveOfEratosthenesCache.getList()
         
         self._storeInCache(primesList)
         
-        return primesList
-    
-    def _createList(self, booleanListOfPrimes):
-        primesList = []
-        for i in range(2, booleanListOfPrimes.__len__()):
-            if booleanListOfPrimes[i] == 1:
-                primesList.append(i)
         return primesList
     
     def _storeInCache(self, prime):

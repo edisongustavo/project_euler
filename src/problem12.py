@@ -24,82 +24,48 @@ We can see that 28 is the first triangle number to have over five divisors.
 
 What is the value of the first triangle number to have over five hundred divisors?
 '''
-from functools import reduce
 import cProfile
 import numbers
-import operator
 import primes
 import unittest
 
-def getTriangleNumber(number):
-    return sum(range(1, number + 1))
-
-def getDivisorsRecursive(number, set, primeFactors, grouping=None):
-    if grouping == None:
-        grouping = len(primeFactors)
-        
-    if grouping <= 1:
-        for i in primeFactors:
-            set.add(i)
-        return
-        
-    #
-    for i in range (0, len(primeFactors) - grouping + 1):
-        prod = reduce(operator.mul, primeFactors[i:i + grouping])
-        set.add(prod)
-    
-    getDivisorsRecursive(number, set, primeFactors, grouping - 1)
-    
-def getDivisors(number, primeGenerator=None):
+def getNumberDivisors(number, primeGenerator=None):
     if primeGenerator is None:
         primeGenerator = primes.PrimeGenerator()
         
-    divisors = set()
-    
-    primeFactors = numbers.getPrimeFactors(number, primeGenerator)
-    
-    getDivisorsRecursive(number, divisors, primeFactors)
-    
-    divisors.add(1)
-    
-    return sorted(list(divisors))
+    countedPrimeFactors = numbers.getCountedPrimeFactors(number, primeGenerator)
+
+    ret = 1
+    for times in countedPrimeFactors.values():
+        ret *= (times + 1)
+    return ret
+
+primeGenerator = primes.PrimeGenerator()
 
 def answer():
-    primeGenerator = primes.PrimeGenerator()
-    
     triangleNumber = 0
     while (True):
         i = 1
         triangleNumber += i 
-        divisors = getDivisors(triangleNumber, primeGenerator)
-        print(triangleNumber, divisors)
-        if len(divisors) > 25:
+        numberDivisors = getNumberDivisors(triangleNumber, primeGenerator)
+        if numberDivisors > 90:
             return triangleNumber
         i += 1
 
 class Test(unittest.TestCase):
-
-    def testGetTriangleNumber(self):
-        self.assertEqual(1, getTriangleNumber(1))
-        self.assertEqual(3, getTriangleNumber(2))
-        self.assertEqual(6, getTriangleNumber(3))
-        self.assertEqual(10, getTriangleNumber(4))
-        self.assertEqual(15, getTriangleNumber(5))
-        self.assertEqual(21, getTriangleNumber(6))
-        self.assertEqual(28, getTriangleNumber(7))
-        pass
     
-    
-    def testGetDivisors(self):
-        self.assertEqual([1, 3], getDivisors(3))
-        self.assertEqual([1, 2, 4], getDivisors(4))
-        self.assertEqual([1, 2, 3, 6], getDivisors(6))
-        self.assertEqual([1, 2, 5, 10], getDivisors(10))
-        self.assertEqual([1, 3, 5, 15], getDivisors(15))
-        self.assertEqual([1, 2, 4, 5, 10, 20], getDivisors(20))
-        self.assertEqual([1, 2, 4, 7, 14, 28], getDivisors(28))
+    def testGetNumberDivisors(self):
+        self.assertEqual(len([1, 3]), getNumberDivisors(3))
+        self.assertEqual(len([1, 2, 4]), getNumberDivisors(4))
+        self.assertEqual(len([1, 2, 3, 6]), getNumberDivisors(6))
+        self.assertEqual(len([1, 2, 5, 10]), getNumberDivisors(10))
+        self.assertEqual(len([1, 3, 5, 15]), getNumberDivisors(15))
+        self.assertEqual(len([1, 2, 4, 5, 10, 20]), getNumberDivisors(20))
+        self.assertEqual(len([1, 2, 4, 7, 14, 28]), getNumberDivisors(28))
         
-        self.assertEqual([1, 2, 3, 4, 5, 6, 8, 10, 12, 15, 20, 24, 30, 40, 60, 120], getDivisors(120))
+        self.assertEqual(len([1, 2, 3, 4, 5, 6, 8, 10, 12, 15, 20, 24, 30, 40, 60, 120]), getNumberDivisors(120))
 
 if __name__ == "__main__":
+    primeGenerator.primeListUsingSieveOfEratosthenes(1000000) #fills the cache
+
     cProfile.run('print(answer())')
