@@ -33,11 +33,12 @@ class Problem12:
     def __init__(self):
         self.primeGenerator = primes.PrimeGenerator()
         self.primeFactors = numbers.PrimeFactors(self.primeGenerator)
-        
+    
     def getNumberDivisors(self, number):
         if number == 1:
             return 1
         
+        #see http://mathschallenge.net/index.php?section=faq&ref=number/number_of_divisors
         countedPrimeFactors = self.primeFactors.getCountedPrimeFactors(number)
 
         ret = 1
@@ -45,17 +46,13 @@ class Problem12:
             ret *= (times + 1)
         return ret
     
-    def fillCache(self, number):
-        self.primeGenerator.primeListUsingSieveOfEratosthenes(number)
-
 def answer():
     problem12 = Problem12()
-    problem12.fillCache(1000000)
     
     triangleNumber = 0
+    i = 1
     while (True):
-        i = 1
-        triangleNumber += i 
+        triangleNumber += i
         numberDivisors = problem12.getNumberDivisors(triangleNumber)
         if numberDivisors > 500:
             return triangleNumber
@@ -76,8 +73,8 @@ class Test(unittest.TestCase):
         
         self.assertEqual(len([1, 2, 3, 4, 5, 6, 8, 10, 12, 15, 20, 24, 30, 40, 60, 120]), self.problem12.getNumberDivisors(120))
         
-    def testAnswer(self):
-        self.assertEqual(1980981, answer())
+    def testZAnswer(self):
+        self.assertEqual(76576500, answer())
 
 if __name__ == "__main__":
     cProfile.run('print(answer())')

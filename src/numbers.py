@@ -53,7 +53,7 @@ class PrimeFactors:
     '''
     def getCountedPrimeFactors(self, number):
         
-        possibleDivisors = self.primeGenerator.primeListUsingSieveOfEratosthenes(int(number / 2) + 1)
+        possibleDivisors = self.primeGenerator.primeListUsingSieveOfEratosthenes(int(math.sqrt(number) + 1))
 
         if number == 1:
             #the number will get simplified to 1, so we need to add this case of the recursion

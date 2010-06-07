@@ -65,6 +65,7 @@ class PrimeGenerator:
         print ("Didnt reach cache on primeListUsingSieveOfEratosthenes for ", number)
         self.sieveOfEratosthenesCache.calculate(number)
         primesList = self.sieveOfEratosthenesCache.getList()
+        print ("Finished building prime list")
         
         self._storeInCache(primesList)
         
