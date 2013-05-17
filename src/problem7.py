@@ -9,7 +9,6 @@ that the 6th prime is 13.
 What is the 10001st prime number?
 '''
 import primes
-import unittest
 
 def getIthPrime(number):
     primeGenerator = primes.PrimeGenerator()
@@ -23,9 +22,8 @@ def answer():
 if __name__ == '__main__':
     print((answer()))
 
-class TestProblem7(unittest.TestCase):
-    def testIthPrime(self):
-        self.assertEqual(13, getIthPrime(6))
-        
-    def testAnswer(self):
-        self.assertEqual(104743, answer())
+def testIthPrime():
+    assert 13 == getIthPrime(6)
+
+def testAnswer():
+    assert 104743 == answer()

@@ -14,8 +14,6 @@ and 115 (one hundred and fifteen) contains 20 letters.
 
 The use of "and" when writing out numbers is in compliance with British usage.
 '''
-import unittest
-
 units = ["one", "two", "three", "four", "five", "six", "seven", "eight", "nine"]
 irregularNumbers = ["ten", "eleven", "twelve", "thirteen", "fourteen", "fifteen", "sixteen", "seventeen", "eighteen", "nineteen"]
 roundedDozens = ["twenty", "thirty", "forty", "fifty", "sixty", "seventy", "eighty", "ninety"]
@@ -60,43 +58,42 @@ def answer():
 
     return size
 
-class Test(unittest.TestCase):
-    def testZero(self):
-        self.assertEqual("", describe(0))
-    def testOne(self):
-        self.assertEqual("one", describe(1))
-    def testTwo(self):
-        self.assertEqual("two", describe(2))
+def testZero():
+    assert "" == describe(0)
+def testOne():
+    assert "one" == describe(1)
+def testTwo():
+    assert "two" == describe(2)
 
-    def testTen(self):
-        self.assertEqual("ten", describe(10))
-    def testEleven(self):
-        self.assertEqual("eleven", describe(11))
-    def testTwenty(self):
-        self.assertEqual("twenty", describe(20))
-    def testTwentyOne(self):
-        self.assertEqual("twenty one", describe(21))
-    def testFourtyTwo(self):
-        self.assertEqual("forty two", describe(42))
+def testTen():
+    assert "ten" == describe(10)
+def testEleven():
+    assert "eleven" == describe(11)
+def testTwenty():
+    assert "twenty" == describe(20)
+def testTwentyOne():
+    assert "twenty one" == describe(21)
+def testFourtyTwo():
+    assert "forty two" == describe(42)
 
-    def testOneHundred(self):
-        self.assertEqual("one hundred", describe(100))
-    def testOneHundredOne(self):
-        self.assertEqual("one hundred and one", describe(101))
-    def testOneHundredTwelve(self):
-        self.assertEqual("one hundred and twelve", describe(112))
-    def testOneHundredFiftySix(self):
-        self.assertEqual("one hundred and fifty six", describe(156))
-    def testThreeHundredFourtyTwo(self):
-        self.assertEqual("three hundred and forty two", describe(342))
+def testOneHundred():
+    assert "one hundred" == describe(100)
+def testOneHundredOne():
+    assert "one hundred and one" == describe(101)
+def testOneHundredTwelve():
+    assert "one hundred and twelve" == describe(112)
+def testOneHundredFiftySix():
+    assert "one hundred and fifty six" == describe(156)
+def testThreeHundredFourtyTwo():
+    assert "three hundred and forty two" == describe(342)
 
-    def testNineHundredNineteen(self):
-        self.assertEqual("nine hundred and nineteen", describe(919))
-    def testNineHundredNinetyNine(self):
-        self.assertEqual("nine hundred and ninety nine", describe(999))
+def testNineHundredNineteen():
+    assert "nine hundred and nineteen" == describe(919)
+def testNineHundredNinetyNine():
+    assert "nine hundred and ninety nine" == describe(999)
 
-    def testOneThousand(self):
-        self.assertEqual("one thousand", describe(1000))
+def testOneThousand():
+    assert "one thousand" == describe(1000)
 
 if __name__ == "__main__":
-    print((answer()))
+    print(answer())

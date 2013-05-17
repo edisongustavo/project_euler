@@ -8,7 +8,6 @@ the product of two 2-digit numbers is 9009 = 91  99.
 
 Find the largest palindrome made from the product of two 3-digit numbers.
 '''
-import unittest
 import numbers
 
 def bruteForce(numberOfDigits):
@@ -32,7 +31,7 @@ def isPalindrome(number):
     size = len(digits)
     if size % 2 != 0:
         return False
-    
+
     for i in range(0, size // 2):
         if digits[i] != digits[size - i - 1]:
             return False
@@ -41,13 +40,12 @@ def isPalindrome(number):
 if __name__ == '__main__':
     print((bruteForce(3)))
 
-class Test(unittest.TestCase):
-    def testIsPalindrome(self):
-        self.assertTrue(isPalindrome(9009))
-        self.assertTrue(isPalindrome(-9009))
-        
-    def testBruteForceWith2Digits(self):
-        self.assertEqual([91, 99], bruteForce(2))
-        
-    def testBruteForceWith3Digits(self):
-        self.assertEqual([913, 993], bruteForce(3))
+def testIsPalindrome():
+    assert isPalindrome(9009)
+    assert isPalindrome(-9009)
+
+def testBruteForceWith2Digits():
+    assert [91, 99] == bruteForce(2)
+
+def testBruteForceWith3Digits():
+    assert [913, 993] == bruteForce(3)

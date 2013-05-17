@@ -27,28 +27,28 @@ What is the value of the first triangle number to have over five hundred divisor
 import cProfile
 import numbers
 import primes
-import unittest
+import pytest
 
 class Problem12:
     def __init__(self):
         self.primeGenerator = primes.PrimeGenerator()
         self.primeFactors = numbers.PrimeFactors(self.primeGenerator)
-    
+
     def getNumberDivisors(self, number):
         if number == 1:
             return 1
-        
-        #see http://mathschallenge.net/index.php?section=faq&ref=number/number_of_divisors
+
+        # see http://mathschallenge.net/index.php?section=faq&ref=number/number_of_divisors
         countedPrimeFactors = self.primeFactors.getCountedPrimeFactors(number)
 
         ret = 1
         for times in list(countedPrimeFactors.values()):
             ret *= (times + 1)
         return ret
-    
+
 def answer():
     problem12 = Problem12()
-    
+
     triangleNumber = 0
     i = 1
     while (True):
@@ -57,24 +57,24 @@ def answer():
         if numberDivisors > 500:
             return triangleNumber
         i += 1
-            
-class Test(unittest.TestCase):
-    def setUp(self):
-        self.problem12 = Problem12()
-        
-    def testGetNumberDivisors(self):
-        self.assertEqual(len([1, 3]), self.problem12.getNumberDivisors(3))
-        self.assertEqual(len([1, 2, 4]), self.problem12.getNumberDivisors(4))
-        self.assertEqual(len([1, 2, 3, 6]), self.problem12.getNumberDivisors(6))
-        self.assertEqual(len([1, 2, 5, 10]), self.problem12.getNumberDivisors(10))
-        self.assertEqual(len([1, 3, 5, 15]), self.problem12.getNumberDivisors(15))
-        self.assertEqual(len([1, 2, 4, 5, 10, 20]), self.problem12.getNumberDivisors(20))
-        self.assertEqual(len([1, 2, 4, 7, 14, 28]), self.problem12.getNumberDivisors(28))
-        
-        self.assertEqual(len([1, 2, 3, 4, 5, 6, 8, 10, 12, 15, 20, 24, 30, 40, 60, 120]), self.problem12.getNumberDivisors(120))
-        
-    def testZAnswer(self):
-        self.assertEqual(76576500, answer())
+
+@pytest.fixture
+def problem12():
+    return Problem12()
+
+def testGetNumberDivisors(problem12):
+    assert len([1, 3]) == problem12.getNumberDivisors(3)
+    assert len([1, 2, 4]) == problem12.getNumberDivisors(4)
+    assert len([1, 2, 3, 6]) == problem12.getNumberDivisors(6)
+    assert len([1, 2, 5, 10]) == problem12.getNumberDivisors(10)
+    assert len([1, 3, 5, 15]) == problem12.getNumberDivisors(15)
+    assert len([1, 2, 4, 5, 10, 20]) == problem12.getNumberDivisors(20)
+    assert len([1, 2, 4, 7, 14, 28]) == problem12.getNumberDivisors(28)
+
+    assert len([1, 2, 3, 4, 5, 6, 8, 10, 12, 15, 20, 24, 30, 40, 60, 120]) == problem12.getNumberDivisors(120)
+
+def testZAnswer():
+    assert 76576500 == answer()
 
 if __name__ == "__main__":
     cProfile.run('print(answer())')

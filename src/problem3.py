@@ -9,17 +9,16 @@ What is the largest prime factor of the number 600851475143 ?
 '''
 import math
 import primes
-import unittest
 import numbers
 '''
 Cant get the prime factors using sieveOfErasthotenes, because the numbers is too big
 '''
 def calculatePrimeFactorsNaively(number):
     primeGenerator = primes.PrimeGenerator()
-    
+
     primeFactors = []
-    
-    #the argument 'number' is too big, so calculate the factors differently
+
+    # the argument 'number' is too big, so calculate the factors differently
     prime = 1
     upperbound = math.sqrt(number)
     while prime < upperbound:
@@ -27,19 +26,18 @@ def calculatePrimeFactorsNaively(number):
         if number % prime == 0:
             primeFactors.append(prime)
             number = numbers.simplifyNumber(number, prime)
-            
+
     return primeFactors
-            
+
 def answer():
     return max(calculatePrimeFactorsNaively(600851475143))
-    
+
 if __name__ == '__main__':
     print((answer()))
 
-class TestProblem3(unittest.TestCase):
-    def test(self):
-        self.assertEqual([5, 7, 13, 29], calculatePrimeFactorsNaively(13195))
-        
-    def testAnswer(self):
-        self.assertEqual(6857, answer())
+def test():
+    assert [5, 7, 13, 29] == calculatePrimeFactorsNaively(13195)
+
+def testAnswer():
+    assert 6857 == answer()
 
