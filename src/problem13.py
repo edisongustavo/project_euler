@@ -117,6 +117,6 @@ if __name__ == '__main__':
             sum += int(num)
 
     digits = numbers.getDigits(sum)
-    stringWithNumbers = "".join(map(lambda s : str(s), digits[0:10]))
+    stringWithNumbers = "".join([str(s) for s in digits[0:10]])
     
     print(stringWithNumbers)

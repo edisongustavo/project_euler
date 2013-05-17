@@ -10,4 +10,4 @@ What is the sum of the digits of the number 2^1000?
 import numbers
 
 if __name__ == '__main__':
-    print(sum(numbers.getDigits(2 ** 1000)))
+    print((sum(numbers.getDigits(2 ** 1000))))

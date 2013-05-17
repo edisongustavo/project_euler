@@ -42,7 +42,7 @@ class Problem12:
         countedPrimeFactors = self.primeFactors.getCountedPrimeFactors(number)
 
         ret = 1
-        for times in countedPrimeFactors.values():
+        for times in list(countedPrimeFactors.values()):
             ret *= (times + 1)
         return ret
     

@@ -130,4 +130,4 @@ if __name__ == "__main__":
         ,[ 1, 70, 54, 71, 83, 51, 54, 69, 16, 92, 33, 48, 61, 43, 52,  1, 89, 19, 67, 48]
     ]
     
-    print(findHighestProd(numbers, 4))
+    print((findHighestProd(numbers, 4)))

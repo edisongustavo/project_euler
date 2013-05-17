@@ -12,6 +12,7 @@ import unittest
 import cProfile
 import primes
 import operator
+from functools import reduce
 
 def isDivisible(number, quocient):
     return number % quocient == 0

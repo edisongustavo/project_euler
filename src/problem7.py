@@ -21,7 +21,7 @@ def answer():
     return getIthPrime(10001)
 
 if __name__ == '__main__':
-    print(answer())
+    print((answer()))
 
 class TestProblem7(unittest.TestCase):
     def testIthPrime(self):

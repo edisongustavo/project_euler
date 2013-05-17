@@ -16,48 +16,48 @@ The use of "and" when writing out numbers is in compliance with British usage.
 '''
 import unittest
 
-units = ["one","two","three","four","five","six","seven","eight","nine"]
-irregularNumbers = ["ten","eleven","twelve","thirteen","fourteen","fifteen","sixteen","seventeen","eighteen","nineteen"]
-roundedDozens = ["twenty","thirty","forty","fifty","sixty","seventy","eighty","ninety"]
+units = ["one", "two", "three", "four", "five", "six", "seven", "eight", "nine"]
+irregularNumbers = ["ten", "eleven", "twelve", "thirteen", "fourteen", "fifteen", "sixteen", "seventeen", "eighteen", "nineteen"]
+roundedDozens = ["twenty", "thirty", "forty", "fifty", "sixty", "seventy", "eighty", "ninety"]
 
 def countLetters(letters):
     return len(letters) - letters.count(" ")
 
 def describe(number):
     desc = ""
-    
-    #HACK! :D
+
+    # HACK! :D
     if number == 1000:
         return "one thousand"
-    
-    hundredUnit = number / 100
+
+    hundredUnit = int(number / 100)
     number = number % 100
-    
-    dozenUnit = number / 10
+
+    dozenUnit = int(number / 10)
     unit = number % 10
-    
+
     if hundredUnit > 0:
-        desc += units[hundredUnit-1] + " hundred"
+        desc += units[hundredUnit - 1] + " hundred"
         if dozenUnit > 0 or unit > 0:
             desc += " and"
-    
+
     if dozenUnit > 0:
         if dozenUnit == 1:
             desc += " " + irregularNumbers[unit]
         else:
-            desc += " " + roundedDozens[dozenUnit-2]
-            
+            desc += " " + roundedDozens[dozenUnit - 2]
+
     if unit > 0 and dozenUnit != 1:
-        desc += " " + units[unit-1]
-            
+        desc += " " + units[unit - 1]
+
     return desc.strip()
 
 def answer():
     size = 0
-    
+
     for i in range(1, 1001):
         size += countLetters(describe(i))
-    
+
     return size
 
 class Test(unittest.TestCase):
@@ -78,7 +78,7 @@ class Test(unittest.TestCase):
         self.assertEqual("twenty one", describe(21))
     def testFourtyTwo(self):
         self.assertEqual("forty two", describe(42))
-        
+
     def testOneHundred(self):
         self.assertEqual("one hundred", describe(100))
     def testOneHundredOne(self):
@@ -89,14 +89,14 @@ class Test(unittest.TestCase):
         self.assertEqual("one hundred and fifty six", describe(156))
     def testThreeHundredFourtyTwo(self):
         self.assertEqual("three hundred and forty two", describe(342))
-        
+
     def testNineHundredNineteen(self):
         self.assertEqual("nine hundred and nineteen", describe(919))
     def testNineHundredNinetyNine(self):
         self.assertEqual("nine hundred and ninety nine", describe(999))
-        
+
     def testOneThousand(self):
         self.assertEqual("one thousand", describe(1000))
 
 if __name__ == "__main__":
-    print(answer())
+    print((answer()))

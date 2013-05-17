@@ -65,10 +65,10 @@ class Graph(object):
         n = self.size ** 2
 
         values = []
-        for i in xrange(n):
+        for i in range(n):
             values.append(array('I', [0] * n))
 
-            for j in xrange(max(0, i - 1), max(i + 1, n)):
+            for j in range(max(0, i - 1), max(i + 1, n)):
                 if i != j and abs(i - j) == 1:
                     values[i][j] = 1
 
@@ -161,4 +161,4 @@ def test_solve_for_grid_size():
 
 
 if __name__ == '__main__':
-    print(solve_for_grid_size(20))
+    print((solve_for_grid_size(20)))

@@ -34,7 +34,7 @@ def answer():
     return max(calculatePrimeFactorsNaively(600851475143))
     
 if __name__ == '__main__':
-    print(answer())
+    print((answer()))
 
 class TestProblem3(unittest.TestCase):
     def test(self):

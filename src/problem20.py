@@ -11,4 +11,4 @@ import math
 import numbers
 
 if __name__ == '__main__':
-    print(sum(numbers.getDigits(math.factorial(100))))
+    print((sum(numbers.getDigits(math.factorial(100)))))

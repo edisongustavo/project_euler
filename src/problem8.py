@@ -49,7 +49,7 @@ def answer():
     return findGreatestProductWith(digits, 5)
         
 if __name__ == '__main__':
-    print(answer())
+    print((answer()))
     
     
 class Test(unittest.TestCase):

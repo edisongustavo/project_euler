@@ -39,7 +39,7 @@ def isPalindrome(number):
     return True
 
 if __name__ == '__main__':
-    print(bruteForce(3))
+    print((bruteForce(3)))
 
 class Test(unittest.TestCase):
     def testIsPalindrome(self):
